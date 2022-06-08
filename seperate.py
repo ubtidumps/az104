@@ -23,13 +23,15 @@ finalhtml = '''
     <link rel="stylesheet" type="text/css" href="https://www.examtopics.com/assets/css/style.css">
 </head>
 <body>
-    
 '''
 
+c=0
 for ele in case_study_questions:
-    ptag  = ele.find_all('p',{'class':'card-text'})
+    ptag  = ele.find_all('li',{'class':'multi-choice-item'})
     for pele in ptag:
-        if pele.find(text = re.compile(r'To start the case study -')) is not None:
+        text = pele.text.strip().replace('\n','').replace(' ','')
+        if 'A.Yes' in text:
+            c+=1
             finalhtml+=ele.prettify()
 finalhtml += '''
 </body>
@@ -139,5 +141,5 @@ finalhtml += '''
 '''
 
 
-with open('casestudies/index.html','w') as f1:
+with open('yesorno/index.html','w') as f1:
     f1.write(finalhtml)
